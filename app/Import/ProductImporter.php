@@ -7,13 +7,23 @@ use App\Repository\ProductRepository;
 
 class ProductImporter
 {
+    /**
+     * @var ProductRepository
+     */
     private $repository;
 
+    /**
+     * ProductImporter constructor.
+     * @param ProductRepository $repository
+     */
     public function __construct(ProductRepository $repository)
     {
         $this->repository = $repository;
     }
 
+    /**
+     *
+     */
     public function import()
     {
         foreach ($this->repository->all() as $product) {

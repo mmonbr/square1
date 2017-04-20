@@ -21,6 +21,9 @@ use App\Repository\DOMProductRepository;
 
 class Import extends Command
 {
+    /**
+     * @var array
+     */
     private $categories = [
         'audio'                => Audio::class,
         'coffee-machines'      => CoffeeMachines::class,

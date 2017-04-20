@@ -10,10 +10,25 @@ use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 class Crawler
 {
+    /**
+     * @var GoutteClient
+     */
     private $goutteClient;
+    /**
+     * @var GuzzleClient
+     */
     private $guzzleClient;
+    /**
+     * @var Recipe
+     */
     private $recipe;
 
+    /**
+     * Crawler constructor.
+     * @param GoutteClient $goutteClient
+     * @param GuzzleClient $guzzleClient
+     * @param Recipe $recipe
+     */
     public function __construct(GoutteClient $goutteClient, GuzzleClient $guzzleClient, Recipe $recipe)
     {
         $this->goutteClient = $goutteClient;
@@ -21,6 +36,9 @@ class Crawler
         $this->recipe = $recipe;
     }
 
+    /**
+     * @return array
+     */
     public function fetch()
     {
         $request = $this->goutteClient->request('GET', $this->recipe->url());
@@ -38,6 +56,10 @@ class Crawler
         return $items;
     }
 
+    /**
+     * @param DomCrawler $crawler
+     * @return array
+     */
     private function extract(DomCrawler $crawler)
     {
         return $crawler->filter($this->recipe->productSelector())->each(function (DomCrawler $crawler) {
@@ -57,6 +79,10 @@ class Crawler
         });
     }
 
+    /**
+     * @param DomCrawler $crawler
+     * @return bool
+     */
     private function hasMorePages(DomCrawler $crawler)
     {
         try {
